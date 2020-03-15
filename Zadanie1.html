@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+
+<style>
+
+	body
+	{
+		background-color: black;
+		color: white;
+		font-size: 20px;
+	}
+	table, th, td
+	{
+		border-collapse: collapse;
+		border: 2px solid grey;
+	}
+	table
+	{
+		width: 100%;
+	}
+	h1, h2, tfoot
+	{
+		text-align: center;
+	}
+	button
+	{
+		width: 100%;
+	}
+
+</style>
+
+	<h1>Apex Legends</h1>
+	<h2>Weapons Basic Information</h2>
+
+</head>
+
+<body onload = "generateTable(), saveToFooter('5')">
+
+	<table id="TN">
+		<thead>
+			<tr>
+				<th>Weapon Name</th>
+				<th>Weapon Type</th>
+				<th>Ammunition Type</th>
+				<th>Magazine Size</th>
+				<th>Rate of Fire</th>
+				<th>Damage per Shot</th>
+				<th>Difficulty Scale (1 - 10)</th>
+			</tr>
+		</thead>
+
+		<tbody ID="T1">
+		</tbody>
+
+		<tfoot id = "TF">
+		</tfoot>
+
+	</table>
+
+</body>
+
+<script>
+
+	class Weapon
+	{
+		constructor(nameC, weapTypeC, ammoTypeC, basicMag, bulletsPerSecondC, damagePerBullet, difficultyScaleC)
+		{
+			this.name = nameC;
+			this.weaponType = weapTypeC;
+			this.ammoType = ammoTypeC;
+			this.basicMagazine = basicMag;
+			this.bulletsPerSecond = bulletsPerSecondC
+			this.damage = damagePerBullet;
+			this.difficultyScale = difficultyScaleC;
+		}
+
+		saveToTable()
+		{
+			let html = "<tr>";
+
+			html += "<th> " + this.name + " </th>";
+			html += "<td> " + this.weaponType + " </td>";
+			html += "<td> " + this.ammoType + " </td>";
+			html += "<td> " + this.basicMagazine + " </td>";
+			html += "<td> " + this.bulletsPerSecond + " </td>";
+			html += "<td> " + this.damage + " </td>";
+			html += "<td> " + this.difficultyScale + " </td>";
+
+			html += "</tr>";
+			
+			return html;
+		}
+	}
+
+
+	var tab = 
+	[
+		new Weapon("R99", "SMG", "Light", 20, 17.66, 11, 8),
+		new Weapon("Prowler", "SMG", "Heavy", 20, 13.33, 14, 6),
+		new Weapon("Alternator", "SMG", "Light", 16, 10, 13, 6),
+		new Weapon("Eva-8", "Shotgun", "Shotgun", 8, 2.13, 63, 5),
+		new Weapon("Peacekeeper", "Shotgun", "Shotgun", 5, 0.96, 110, 9),
+		new Weapon("Mozambique", "Shotgun", "Shotgun", 3, 3, 45, 1),
+		new Weapon("VK-47 Flatline", "Assault Riffle", "Heavy", 20, 10, 20, 3),
+		new Weapon("G7 Scout", "Assault Riffle", "Light", 10, 36, 4.55, 9),
+		new Weapon("Hemlok", "Assault Riffle", "Heavy", 18, 26, 6.4, 8),
+		new Weapon("R-301", "Assault Riffle", "Light", 18, 13.5, 14, 4),
+		new Weapon("Havoc", "Assault Riffle", "Energetic", 36, 7.28, 18, 2),
+		new Weapon("M600 Spitfire", "Light Machine Gun", "Heavy", 35, 8.53, 18, 2),
+		new Weapon("L-STAR", "Light Machine Gun", "Energetic", 960, 12, 18, 7),
+		new Weapon("Re-45", "Pistol", "Light", 16, 12.5, 11, 7),
+		new Weapon("P2020", "Pistol", "Light", 10, 7.16, 13, 8),
+		new Weapon("Wingman", "Pistol", "Heavy", 5, 2.6, 45, 10),
+		new Weapon("Longbow DMR", "Sniper Riffle", "Sniper", 6, 1.43, 55, 10),
+		new Weapon("Triple Take", "Sniper Riffle", "Sniper", 5, 1.46, 69, 4),
+		new Weapon("Sentinel", "Sniper Riffle", "Sniper", 4, 0.56, 70, 4),
+		new Weapon("Charge Riffle", "Sniper Riffle", "Sniper", 4, 0.5, 90, 1),
+		new Weapon("Mastiff", "Shotgun", "Gold", 4, 1.6, 144, 8),
+		new Weapon("Devotion", "Light Machine Gun", "Gold", 54, 15, 17, 4),
+		new Weapon("Krabler .50-cal", "Sniper Riffle", "Gold", 4, 0.6, 145, 10)
+	];
+
+	function addToSelect()
+	{
+		let html2 = '<tr>';
+		
+		html2 += '<th>';
+		html2 += '<input type ="text" id="Search" onChange="filterTH(\'Search\', \'0\')" placeholder="Search For Weapon">';
+		html2 += '</th>';
+		
+		html2 += '<th>';
+		html2 += '<select id="weapType" onChange="filter(\'weapType\', \'1\')">';
+		html2 += '<option selected disabled>Choose Weapon Type</option>';
+		html2 += '<option value = "Shotgun">Shotgun</option>';
+		html2 += '<option value = "Sniper Riffle">Sniper Riffle</option>';
+		html2 += '<option value = "Assault Riffle">Assault Riffle</option>';
+		html2 += '<option value = "Light Machine Gun">Light Machine Gun</option>';
+		html2 += '<option value = "SMG">Small Machine Gun</option>';
+		html2 += '<option value = "Pistol">Pistol</option>';
+		html2 += '</select>';
+		html2 += '</th>';
+
+		html2 += '<th>';
+		html2 += '<select id="AmmoType" onChange="filter(\'AmmoType\', \'2\')">';
+		html2 += '<option selected disabled>Choose Ammunition</option>';
+		html2 += '<option value = "Shotgun">Shotgun</option>';
+		html2 += '<option value = "Heavy">Heavy</option>';
+		html2 += '<option value = "Light">Light</option>';
+		html2 += '<option value = "Energetic">Energetic</option>';		
+		html2 += '<option value = "Gold">Gold</option>';
+		html2 += '<option value = "Sniper">Sniper</option>';
+		html2 += '</th>';
+
+		html2 += '<th><button id ="MS" onclick = "generateTable(sortInc(\'basicMagazine\'))">Sort</button> </th>';
+		html2 += '<th><button id = "ROF" onclick = "generateTable(sortInc(\'bulletsPerSecond\'))">Sort</button>	</th>';
+		html2 += '<th><button id ="DPS" onclick = "generateTable(sortInc(\'damage\'))">Sort</button> </th>';
+		html2 += '<th><button id ="DS" onclick = "generateTable(sortInc(\'difficultyScale\'))">Sort</button> </th>';
+
+		html2 += '</tr>';
+
+		return html2;
+	}
+
+	/*function generateTable()
+	{
+		let html = "";
+
+		for(let c of tab)
+		{
+			html += c.saveToTable();
+		}
+
+		T1.innerHTML = html;
+	}*/
+
+
+	function generateTable(sortMethod)
+	{
+		tab.sort(sortMethod);
+
+		let html = "";
+
+		for(let c of tab)
+		{
+			html += c.saveToTable();
+		}
+		
+		T1.innerHTML = addToSelect() + html;
+	}
+
+	function sortInc(key)
+	{
+		sortedInsc = true;
+
+		return function(L, P)
+		{
+			return L[key] - P[key];
+		}
+	}
+
+	function sortDesc(key)
+	{
+		sortedInsc = false;
+
+		return function(L, P)
+		{
+			return P[key] - L[key];
+		}
+	}
+
+	function sortAlphabetically()
+	{
+		tab.sort();
+
+		let html = "";
+
+		for(let c of tab)
+		{
+			html += c.saveToTable();
+		}
+
+		var s = addToSelect();
+
+		T1.innerHTML = html + addToSelect();
+	}
+
+	function filter(callerid, columnNo)
+	{
+		var input = document.getElementById(callerid);
+		var filtr = input.value.toLowerCase();
+		var t = document.getElementById("T1");
+		var trr = t.getElementsByTagName("tr");
+
+		for(let i = 1; i < trr.length; i++)
+		{
+			var tdd = trr[i].getElementsByTagName("td")[columnNo-1];
+
+			if(tdd)
+			{
+				txtValue = tdd.textContent || tdd.innerText;
+
+				if(txtValue.toLowerCase().indexOf(filtr) > -1)
+				{
+					trr[i].style.display = "";
+				}
+				else
+				{
+					trr[i].style.display = "none";
+				}
+			}
+		}
+
+		filtersToReset(input);
+	}
+
+	function filterTH(callerid, columnNo)
+	{
+		var input = document.getElementById(callerid);
+		var filtr = input.value.toLowerCase();
+		var t = document.getElementById("T1");
+		var trr = t.getElementsByTagName("tr");
+
+		for(let i = 1; i < trr.length; i++)
+		{
+			var tdh = trr[i].getElementsByTagName("th")[columnNo];
+
+			if(tdh)
+			{
+				txtValue = tdh.textContent || tdh.innerText;
+
+				if(txtValue.toLowerCase().indexOf(filtr) > -1)
+				{
+					trr[i].style.display = "";
+				}
+				else
+				{
+					trr[i].style.display = "none";
+				}
+			}
+		}
+		filtersToReset(input);
+	}
+
+	function filtersToReset(newFilter)
+	{
+		var nf = document.getElementById(newFilter);
+
+		var otherfilters = ["Search", "weapType", "AmmoType"];
+		
+		for(let i = 0; i < 3; i++)
+		{
+			if(nf != otherfilters[i])
+			{
+				var old = document.getElementById(otherfilters[i]);
+				old.selectedIndex = 0;
+			}
+		}
+	}
+
+	function saveToFooter(callerColumn)
+	{
+		var t = document.getElementById("TF");
+
+		t.innerHTML += '<tr>';
+
+		t.innerHTML += '<td>Average:</td>';
+		
+		t.innerHTML += '<td>';
+		t.innerHTML += '0';	//sumColumn(callerColumn);
+		t.innerHTML += '</td>';
+
+		t.innerHTML += '</tr>';
+	}
+
+	function sumColumn(column)
+	{
+		var t = document.getElementById("T1");
+		var result = 0;
+
+		for (let i = 2; i < t.rows; i++)
+		{
+			result += Number(i[column]);
+		}
+
+		return result.toPrecision(2);
+	}
+
+</script>
+</html>
