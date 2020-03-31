@@ -301,15 +301,20 @@
 
 	function saveToFooter(callerColumn)
 	{
-		var t = document.getElementById("TF");
+        	var t = document.getElementById("TFID");
+        	var toInsertv3 = '<td>' + sumColumn(5) + '</td>';
 
-		t.innerHTML += '<tr>';
+		t.innerHTML = '<tr>';
 
 		t.innerHTML += '<td>Average:</td>';
-		
-		t.innerHTML += '<td>';
-		t.innerHTML += '0';	//sumColumn(callerColumn);
-		t.innerHTML += '</td>';
+        
+		t.innerHTML += '<td>0</td>';
+
+        	t.innerHTML += '<td>0</td>';
+
+        	t.innerHTML += toInsertv3;
+
+        	t.innerHTML += '<td>0</td>';
 
 		t.innerHTML += '</tr>';
 	}
@@ -319,12 +324,12 @@
 		var t = document.getElementById("T1");
 		var result = 0;
 
-		for (let i = 2; i < t.rows; i++)
-		{
-			result += Number(i[column]);
-		}
-
-		return result.toPrecision(2);
+		for (let i = 2; i < t.rows - 1; i++)
+        {
+            result += i[column].innerText;
+        }
+        //return 5;
+		return result.toPrecision(3);
 	}
 
 </script>
