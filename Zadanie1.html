@@ -24,7 +24,7 @@
 	{
 		text-align: center;
 	}
-	button
+	button, select, input
 	{
 		width: 100%;
 	}
@@ -51,10 +51,14 @@
 			</tr>
 		</thead>
 
-		<tbody ID="T1">
+		<tbody ID="T1" >
 		</tbody>
 
 		<tfoot id = "TF">
+               <tr id="TFID" >
+                   <td>Click here!</td>
+
+               </tr>
 		</tfoot>
 
 	</table>
@@ -162,19 +166,6 @@
 
 		return html2;
 	}
-
-	/*function generateTable()
-	{
-		let html = "";
-
-		for(let c of tab)
-		{
-			html += c.saveToTable();
-		}
-
-		T1.innerHTML = html;
-	}*/
-
 
 	function generateTable(sortMethod)
 	{
@@ -307,17 +298,17 @@
 
 		t.innerHTML += '<td>Average:</td>';
 
-     		t.innerHTML += '<td> </td>';
+       		t.innerHTML += '<td> </td>';
 
       		t.innerHTML += '<td> </td>';
 
-       		t.innerHTML += '<td>' + sumColumn(3) + '</td>';
+        	t.innerHTML += '<td>' + sumColumn(3) + '</td>';
 
-       		t.innerHTML += '<td>' + sumColumn(4) + '</td>';
+        	t.innerHTML += '<td>' + sumColumn(4) + '</td>';
 
-       		t.innerHTML += '<td>' + sumColumn(5) + '</td>';
+        	t.innerHTML += '<td>' + sumColumn(5) + '</td>';
 
-       		t.innerHTML += '<td>' + sumColumn(6) + '</td>';
+        	t.innerHTML += '<td>' + sumColumn(6) + '</td>';
 
 		t.innerHTML += '</tr>';
 	}
@@ -325,16 +316,16 @@
 	function sumColumn(column)
 	{
 		var t = document.getElementById("TN");
-      		var result = 0;
-      		var count = 0;
+        	var result = 0;
+        	var count = 0;
 
-       		for (var i = 2; i < t.rows.length - 1; i++)
+        	for (var i = 2; i < t.rows.length - 1; i++)
         	{
-           		var num = Number(t.rows[i].cells[column].innerHTML);
-          		result += num;
-           		count++;
-        	}
-       		return (result / count).toFixed(3);
+            		var num = Number(t.rows[i].cells[column].innerHTML);
+            		result += num;
+            		count++;
+       		}
+        	return (result / count).toFixed(3);
 	}
 
 </script>
