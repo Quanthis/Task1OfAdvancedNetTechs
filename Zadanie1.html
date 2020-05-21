@@ -36,7 +36,7 @@
 
 </head>
 
-<body onload = "generateTable(), saveToFooter('5')">
+<body onload = "generateTable(), saveToFooter()">
 
 	<table id="TN">
 		<thead>
@@ -299,37 +299,42 @@
 		}
 	}
 
-	function saveToFooter(callerColumn)
+	function saveToFooter()
 	{
-        	var t = document.getElementById("TFID");
-        	var toInsertv3 = '<td>' + sumColumn(5) + '</td>';
+       		var t = document.getElementById("TFID");
 
 		t.innerHTML = '<tr>';
 
 		t.innerHTML += '<td>Average:</td>';
-        
-		t.innerHTML += '<td>0</td>';
 
-        	t.innerHTML += '<td>0</td>';
+     		t.innerHTML += '<td> </td>';
 
-        	t.innerHTML += toInsertv3;
+      		t.innerHTML += '<td> </td>';
 
-        	t.innerHTML += '<td>0</td>';
+       		t.innerHTML += '<td>' + sumColumn(3) + '</td>';
+
+       		t.innerHTML += '<td>' + sumColumn(4) + '</td>';
+
+       		t.innerHTML += '<td>' + sumColumn(5) + '</td>';
+
+       		t.innerHTML += '<td>' + sumColumn(6) + '</td>';
 
 		t.innerHTML += '</tr>';
 	}
 
 	function sumColumn(column)
 	{
-		var t = document.getElementById("T1");
-		var result = 0;
+		var t = document.getElementById("TN");
+      		var result = 0;
+      		var count = 0;
 
-		for (let i = 2; i < t.rows - 1; i++)
-        {
-            result += i[column].innerText;
-        }
-        //return 5;
-		return result.toPrecision(3);
+       		for (var i = 2; i < t.rows.length - 1; i++)
+        	{
+           		var num = Number(t.rows[i].cells[column].innerHTML);
+          		result += num;
+           		count++;
+        	}
+       		return (result / count).toFixed(3);
 	}
 
 </script>
